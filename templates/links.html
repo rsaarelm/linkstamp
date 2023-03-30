@@ -4,7 +4,47 @@
     <meta charset="utf-8">
     <title>Links page</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script>
+function showTaggedOnly(requested) {
+    const items = document.querySelectorAll('li');
+    items.forEach(item => {
+        var show = false;
+
+        const tags = item.getElementsByClassName('tag');
+        for (var i = 0; i < tags.length; i++) {
+            for (var j = 0; j < requested.length; j++) {
+                if (tags[i].textContent === requested[j]) {
+                    show = true;
+                }
+            }
+        }
+
+        if (show) {
+            item.style.display = 'list-item';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function showAll() {
+    const items = document.querySelectorAll('li');
+    items.forEach(item => {
+        item.style.display = 'list-item';
+    })
+}
+
+window.onhashchange = function() {
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.slice(1));
+    if (params.has('tags')) {
+        const tags = params.get('tags').split('+');
+        showTaggedOnly(tags)
+    } else {
+        showAll()
+    }
+}
+    </script>
   </head>
   <body>
     <ul>{% for (title, data) in links %}
