@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Links page</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <ul>{% for (title, data) in links %}
+        <li>
+            <a href="{{ data.url }}">{{ title }}</a><br/>
+            {% for tag in data.tags %}<a class="tag" href="#tags={{ tag }}">{{ tag }}</a>&nbsp;{% endfor %}
+            <p>{{ data.description }}</p>
+        </li>{% endfor %}
+    </ul>
+  </body>
+</html>
