@@ -7,8 +7,8 @@
   {% for (title, data) in links %}
   <entry>
     <title>{{ title }}</title>
-    <link href="{{ data.url }}"/>
-    <id>{{ data.url }}</id>
+    <link href="{{ data.uri }}"/>
+    <id>{{ data.uri }}</id>
     <updated>{{ data.added }}</updated>
     <summary>{{ data.description }}</summary>
   </entry>

@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Default, Debug, Serialize, Deserialize)]
 #[serde(default)]
 struct LinkData {
-    url: String,
+    uri: String,
     added: String,
     tags: Vec<String>,
     description: String,

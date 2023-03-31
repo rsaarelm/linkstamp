@@ -42,7 +42,7 @@ window.onhashchange = function() {
   <body>
     <ul>{% for (title, data) in links %}
         <li>
-            <a href="{{ data.url }}" target="_blank">{{ title }}</a><br/>
+            <a href="{{ data.uri }}" target="_blank">{{ title }}</a><br/>
             {% for tag in data.tags %}<a class="tag" href="#tags={{ tag }}">{{ tag }}</a>&nbsp;{% endfor %}
             <p>{{ data.description }}</p>
         </li>{% endfor %}
