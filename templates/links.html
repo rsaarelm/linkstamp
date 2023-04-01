@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>{{ title }}</title>
+    <style>
+.date { color: gray; font-size: smaller; }
+    </style>
     <link rel="stylesheet" href="style.css">
     <script>
 function showTaggedOnly(requested) {
@@ -43,7 +46,7 @@ window.onhashchange = function() {
     <ul>{% for (uri, data) in links %}
         <li>
             <a href="{{ uri }}" target="_blank">{{ data.title }}</a><br/>
-            {% for tag in data.tags %}<a class="tag" href="#tags={{ tag }}">{{ tag }}</a>&nbsp;{% endfor %}
+            <span class="date">{{ data.date }}</span> {% for tag in data.tags %}<a class="tag" href="#tags={{ tag }}">{{ tag }}</a>&nbsp;{% endfor %}
             <p>{{ data.description }}</p>
         </li>{% endfor %}
     </ul>
