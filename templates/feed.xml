@@ -4,11 +4,11 @@
   <updated>{{ updated }}</updated>
   <id>{{ site_url }}</id>
 
-  {% for (title, data) in links %}
+  {% for (uri, data) in links %}
   <entry>
-    <title>{{ title }}</title>
-    <link href="{{ data.uri }}"/>
-    <id>{{ data.uri }}</id>
+    <title>{{ data.title }}</title>
+    <link href="{{ uri }}"/>
+    <id>{{ uri }}</id>
     <updated>{{ data.added }}</updated>
     <summary>{{ data.description }}</summary>
   </entry>

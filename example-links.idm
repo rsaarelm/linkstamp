@@ -1,11 +1,11 @@
-Cool URIs don't change
-  :uri https://www.w3.org/Provider/Style/URI
+https://www.w3.org/Provider/Style/URI
+  :title Cool URIs don't change
   :added 2023-03-30T09:35:08+0300
   :tags internet links
   :description
     Don't move your links.
-The Feynman Lectures on Physics
-  :uri https://www.feynmanlectures.caltech.edu/
+https://www.feynmanlectures.caltech.edu/
+  :title The Feynman Lectures on Physics
   :added 2023-03-30T09:38:46+0300
   :tags physics richard-feynman
   :description
