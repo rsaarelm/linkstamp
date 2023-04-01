@@ -39,6 +39,10 @@ struct Args {
     #[arg(long)]
     feed: bool,
 
+    /// Dump bookmarks in JSON
+    #[arg(long)]
+    dump_json: bool,
+
     /// Title of your page.
     #[arg(long, default_value = "Links page")]
     title: String,
@@ -74,6 +78,11 @@ fn main() {
         title: args.title,
         site_url: args.site_url.unwrap_or_default(),
     };
+
+    if args.dump_json {
+        print!("{}", serde_json::to_string(&links.links).expect("Failed to output JSON"));
+        return;
+    }
 
     if args.feed {
         println!("{}", Feed(links).render().unwrap());
