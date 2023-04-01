@@ -1,9 +1,0 @@
-Static tagged bookmarks page generator.
-
-Test use:
-
-    cargo run < example-links.idm > /tmp/links.html
-
-TOML version:
-
-    cargo run -- --toml < example-links.toml > /tmp/links.html
