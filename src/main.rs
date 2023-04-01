@@ -11,6 +11,7 @@ use serde::{Deserialize, Serialize};
 struct LinkData {
     title: String,
     added: String,
+    date: String,
     tags: Vec<String>,
     description: String,
 }
