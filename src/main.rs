@@ -14,9 +14,10 @@ struct LinkData {
     date: String,
     tags: Vec<String>,
     description: String,
+    id: String,
 
     /// Further parts if it's a series of posts.
-    sequence: Vec<String>
+    sequence: Vec<String>,
 }
 
 #[derive(Default, Template)]
@@ -62,11 +63,18 @@ fn main() {
     let mut buffer = String::new();
     stdin().lock().read_to_string(&mut buffer).unwrap();
 
-    let links: IndexMap<String, LinkData> = if args.toml {
+    let mut links: IndexMap<String, LinkData> = if args.toml {
         toml::from_str(&buffer).expect("Invalid TOML")
     } else {
         idm::from_str(&buffer).expect("Invalid IDM")
     };
+
+    // Compute IDs from URLs.
+    for (url, data) in links.iter_mut() {
+        let digest = md5::compute(url);
+        let id = base64_url::encode(&digest.0);
+        data.id = id;
+    }
 
     // Assume date values can be sorted lexically so the last in order is newest.
     let updated = links
@@ -84,7 +92,10 @@ fn main() {
     };
 
     if args.dump_json {
-        print!("{}", serde_json::to_string(&links.links).expect("Failed to output JSON"));
+        print!(
+            "{}",
+            serde_json::to_string(&links.links).expect("Failed to output JSON")
+        );
         return;
     }
 
