@@ -13,7 +13,7 @@ struct LinkData {
     added: String,
     date: String,
     tags: Vec<String>,
-    description: String,
+    notes: String,
     id: String,
 
     /// Further parts if it's a series of posts.

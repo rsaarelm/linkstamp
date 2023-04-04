@@ -51,7 +51,7 @@ window.onhashchange = function() {
             {% endfor %}
             <br/>
             <a class="date" href="#{{ data.id }}">{{ data.date }}</a> {% for tag in data.tags %}<a class="tag" href="#tags={{ tag }}">{{ tag }}</a>&nbsp;{% endfor %}
-            <p>{{ data.description }}</p>
+            <p>{{ data.notes }}</p>
         </li>{% endfor %}
     </ul>
   </body>

@@ -10,7 +10,7 @@
     <link href="{{ uri }}"/>
     <id>{{ uri }}</id>
     <updated>{{ data.added }}</updated>
-    <summary>{{ data.description }}</summary>
+    <summary>{{ data.notes }}</summary>
   </entry>
   {% endfor %}
 
