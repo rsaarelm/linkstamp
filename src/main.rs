@@ -14,6 +14,9 @@ struct LinkData {
     date: String,
     tags: Vec<String>,
     description: String,
+
+    /// Further parts if it's a series of posts.
+    sequence: Vec<String>
 }
 
 #[derive(Default, Template)]
