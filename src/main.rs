@@ -69,11 +69,23 @@ fn main() {
         idm::from_str(&buffer).expect("Invalid IDM")
     };
 
-    // Compute IDs from URLs.
     for (url, data) in links.iter_mut() {
+        // Compute IDs from URLs.
         let digest = md5::compute(url);
         let id = base64_url::encode(&digest.0);
         data.id = id;
+
+        // Generate dummy titles from URLs if needed
+        if data.title.trim().is_empty() {
+            data.title = url.clone();
+        }
+
+        // Mark PDF links
+        if url.ends_with(".pdf")
+            && (!data.title.ends_with(".pdf") && !data.title.ends_with(" (pdf)"))
+        {
+            data.title.push_str(" (pdf)");
+        }
     }
 
     // Assume date values can be sorted lexically so the last in order is newest.
