@@ -40,6 +40,10 @@ window.onhashchange = function() {
     </script>
   </head>
   <body>
+    <div id='header'>
+        <a class="feedbutton" type="application/atom+xml" rel="alternate" href="feed.xml">Atom feed</a>
+    </div>
+
     <ul>{% for (uri, data) in links %}
         <li class="bookmark" id="{{ data.id }}">
             <a href="{{ uri }}" target="_blank">{{ data.title }}</a>
