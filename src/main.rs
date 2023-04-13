@@ -118,6 +118,10 @@ fn main() {
         site_url: args.site_url.unwrap_or_default(),
     };
 
+    // Reverse the list, make the newest link show up on top on the links
+    // page.
+    links.links.reverse();
+
     if args.dump_json {
         print!(
             "{}",
