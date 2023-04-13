@@ -6,12 +6,18 @@ use derive_deref::Deref;
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Default, Debug, Serialize, Deserialize)]
+const EPOCH: &str = "1970-01-01T00:00:00Z";
+
+const FEED_LINK_COUNT: usize = 30;
+
+#[derive(Clone, Default, Debug, Serialize, Deserialize)]
 #[serde(default)]
 struct LinkData {
     title: String,
     added: String,
     date: String,
+    /// If it's available, `added`, otherwise `date`.
+    feed_date: String,
     tags: Vec<String>,
     notes: String,
     id: String,
@@ -20,7 +26,7 @@ struct LinkData {
     sequence: Vec<String>,
 }
 
-#[derive(Default, Template)]
+#[derive(Clone, Default, Template)]
 #[template(path = "links.html")]
 struct Links {
     site_url: String,
@@ -80,6 +86,15 @@ fn main() {
             data.title = url.clone();
         }
 
+        // Generate ATOM feed sorting dates
+        data.feed_date = if !data.added.is_empty() {
+            data.added.clone()
+        } else if !data.date.is_empty() {
+            data.date.clone()
+        } else {
+            EPOCH.to_owned()
+        };
+
         // Mark PDF links
         if url.ends_with(".pdf")
             && (!data.title.ends_with(".pdf") && !data.title.ends_with(" (pdf)"))
@@ -91,12 +106,12 @@ fn main() {
     // Assume date values can be sorted lexically so the last in order is newest.
     let updated = links
         .iter()
-        .map(|(_, data)| &data.added)
+        .map(|(_, data)| &data.feed_date)
         .max()
         .cloned()
-        .unwrap_or("1970-01-01T00:00:00Z".to_owned());
+        .unwrap_or(EPOCH.to_owned());
 
-    let links = Links {
+    let mut links = Links {
         links,
         updated,
         title: args.title,
@@ -112,6 +127,14 @@ fn main() {
     }
 
     if args.feed {
+        // Creating an ATOM feed. Sort links by when they were added, only
+        // show the last 30 links.
+        links
+            .links
+            .sort_by(|k1, v1, k2, v2| (&v1.feed_date, k1).cmp(&(&v2.feed_date, k2)));
+        if links.links.len() > FEED_LINK_COUNT {
+            links.links = links.links.split_off(links.links.len() - FEED_LINK_COUNT);
+        }
         println!("{}", Feed(links).render().unwrap());
     } else {
         println!("{}", links.render().unwrap());

@@ -7,10 +7,13 @@
   {% for (uri, data) in links %}
   <entry>
     <title>{{ data.title }}</title>
-    <link href="{{ uri }}"/>
-    <id>{{ uri }}</id>
-    <updated>{{ data.added }}</updated>
-    <summary>{{ data.notes }}</summary>
+    <link href="{{ site_url }}#{{ data.id }}"/>
+    <id>{{ data.id }}</id>
+    <updated>{{ data.feed_date }}</updated>
+    <summary type="html">
+        <a href="{{ uri }}">{{ data.title }}</a><br/>
+        {{ data.notes }}
+    </summary>
   </entry>
   {% endfor %}
 
