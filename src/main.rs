@@ -8,6 +8,15 @@ use serde::{Deserialize, Serialize};
 
 const EPOCH: &str = "1970-01-01T00:00:00Z";
 
+fn normalize_date(partial_date: &str) -> String {
+    let mut ret = partial_date.to_string();
+    let skip = ret.chars().count();
+    for c in EPOCH.chars().skip(skip) {
+        ret.push(c);
+    }
+    ret
+}
+
 const FEED_LINK_COUNT: usize = 30;
 
 #[derive(Clone, Default, Debug, Serialize, Deserialize)]
@@ -88,9 +97,9 @@ fn main() {
 
         // Generate ATOM feed sorting dates
         data.feed_date = if !data.added.is_empty() {
-            data.added.clone()
+            normalize_date(&data.added)
         } else if !data.date.is_empty() {
-            data.date.clone()
+            normalize_date(&data.date)
         } else {
             EPOCH.to_owned()
         };
